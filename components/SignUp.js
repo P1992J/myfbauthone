@@ -43,7 +43,7 @@ export default class SignUp extends React.Component {
           onPress={() => this.props.navigation.navigate('Login')}
         />
       </View>
-    )
+    );
   }
 }
 

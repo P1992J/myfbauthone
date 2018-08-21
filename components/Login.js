@@ -43,9 +43,11 @@ export default class Login extends React.Component {
           onPress={() => this.props.navigation.navigate('SignUp')}
         />
       </View>
-    )
+    );
   }
 }
+
+
 
 const styles = StyleSheet.create({
   container: {
