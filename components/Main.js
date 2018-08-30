@@ -1,6 +1,8 @@
 import React from 'react'
-import { StyleSheet, Platform, Image, Text, View } from 'react-native'
+import { StyleSheet, Platform, Image, Text, View,TouchableOpacity } from 'react-native'
 import firebase from 'react-native-firebase'
+
+import GetDBdoc from './GetDBdoc.js';
 
 export default class Main extends React.Component {
   state = { currentUser: null }
@@ -11,14 +13,26 @@ export default class Main extends React.Component {
     this.setState({ currentUser })
   }
 
+  _userSignout = () => {
+    this.setState({ currentUser: null });
+    firebase.auth().signOut();
+    this.props.navigation.navigate('Login');
+  }
+
   render() {
     const { currentUser } = this.state
 
     return (
       <View style={styles.container}>
-        <Text>
-          Hi {currentUser && currentUser.email}!
-        </Text>
+         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingBottom: 2 }}>
+          <Text style={styles.itemText}> {currentUser && currentUser.email}! </Text>
+          <TouchableOpacity style={styles.submitButtonStyle}
+            onPress={() => this._userSignout()}>
+            <Text style={styles.submitButtonTextStyle}> Signout </Text>
+          </TouchableOpacity>
+        </View>
+
+        <GetDBdoc />
       </View>
     )
   }
@@ -29,5 +43,18 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
-  }
+  },
+  itemText: {
+    fontSize: 14,
+    paddingRight: 20,
+  },
+  submitButtonStyle: {
+    backgroundColor: '#7a42f4',
+    paddingLeft: 5,
+    margin: 5,
+    /* height: 40,*/
+  },
+  submitButtonTextStyle: {
+    color: 'white'
+  },
 })
